@@ -15,4 +15,9 @@ public class TyrantSocket extends Socket {
     public OutputStream getOutputStream() throws IOException {
         return null;
     }
+
+    @Override
+    public synchronized void close() throws IOException {
+        super.close();
+    }
 }
