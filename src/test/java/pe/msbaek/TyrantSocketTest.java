@@ -1,6 +1,7 @@
 package pe.msbaek;
 
 import org.junit.Test;
+import pe.msbaek.mock.TyrantSocket;
 
 import java.io.IOException;
 
