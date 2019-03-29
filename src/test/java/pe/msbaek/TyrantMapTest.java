@@ -28,6 +28,11 @@ public class TyrantMapTest {
 	}
 
 	@Test
+	public void tEMp_openWithMock() throws IOException {
+		new TyrantMap(new TyrantSocket()).open();
+	}
+
+	@Test
 	public void get_retrives_what_was_put() throws IOException {
 //		byte[] key = "key".getBytes(); // step 2.2
 //		byte[] value = "value".getBytes(); // step 2.3
@@ -60,7 +65,4 @@ public class TyrantMapTest {
 		return testName.getMethodName().contains(TEMPORAL_TEST_PREFIX);
 	}
 
-	static class MockSocket extends Socket {
-
-	}
 }

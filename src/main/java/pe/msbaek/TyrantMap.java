@@ -40,7 +40,7 @@ class TyrantMap {
 	}
 
 	public void open() throws IOException {
-		if(socket != null) {
+		if(socket == null) {
 			socket = new Socket("localhost", 1978);
 		}
 		writer = new DataOutputStream(socket.getOutputStream());
