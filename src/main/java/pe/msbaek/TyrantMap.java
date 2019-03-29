@@ -13,6 +13,15 @@ class TyrantMap {
 	private DataOutputStream writer;
 	private DataInputStream reader;
 
+	public TyrantMap() {}
+
+	public TyrantMap(Socket socket) {
+		if(socket == null) {
+			throw new IllegalArgumentException();
+		}
+		this.socket = socket;
+	}
+
 	public void put(byte[] key, byte[] value) throws IOException {
 		writeOperation(PUT_OPERATION);
 		writer.writeInt(key.length);
@@ -31,7 +40,9 @@ class TyrantMap {
 	}
 
 	public void open() throws IOException {
-		socket = new Socket("localhost", 1978);
+		if(socket != null) {
+			socket = new Socket("localhost", 1978);
+		}
 		writer = new DataOutputStream(socket.getOutputStream());
 		reader = new DataInputStream(socket.getInputStream());
 	}
