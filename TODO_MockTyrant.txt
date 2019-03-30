@@ -1,0 +1,24 @@
+TODO
+Function List
+--------------------------------
+* read
+* write
+* multiple clients
+* vanish
+* encode client format
+* decode client format
+
+* java.net.Socket interfaces
+* java.io.DataInputStream interfaces
+* java.io.DataOutputStream interfaces
+
+--------------------------------
+
+packet structure
+--------------------------------
+1   OPERATION_PREFIX(0xC8)
+1   OPERATION_CODE
+4   key length
+4   value length
+n   key
+n   value
