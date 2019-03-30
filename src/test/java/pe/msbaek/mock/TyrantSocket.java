@@ -23,6 +23,8 @@ public class TyrantSocket extends Socket {
 
     static class TyrantInputStream extends InputStream {
 
+        private int offset;
+
         @Override
         public int read() throws IOException {
             return 0;
@@ -33,7 +35,7 @@ public class TyrantSocket extends Socket {
 
         @Override
         public void write(int b) throws IOException {
-
+            TyrantSocketFile.write(b);
         }
     }
 }
