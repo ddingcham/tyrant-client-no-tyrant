@@ -7,12 +7,12 @@ import java.net.Socket;
 
 public class TyrantSocket extends Socket {
     @Override
-    public InputStream getInputStream() throws IOException {
+    public InputStream getInputStream() {
         return new TyrantInputStream();
     }
 
     @Override
-    public OutputStream getOutputStream() throws IOException {
+    public OutputStream getOutputStream() {
         return new TyrantOutputStream();
     }
 
@@ -26,7 +26,7 @@ public class TyrantSocket extends Socket {
         private int offset;
 
         @Override
-        public int read() throws IOException {
+        public int read() {
             return 0;
         }
     }
@@ -34,7 +34,7 @@ public class TyrantSocket extends Socket {
     static class TyrantOutputStream extends OutputStream {
 
         @Override
-        public void write(int b) throws IOException {
+        public void write(int b) {
             TyrantSocketFile.write(b);
         }
     }

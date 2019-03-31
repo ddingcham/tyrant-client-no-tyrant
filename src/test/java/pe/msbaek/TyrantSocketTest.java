@@ -1,7 +1,7 @@
 package pe.msbaek;
 
 import org.junit.Test;
-import pe.msbaek.mock.TyrantRequestProperties;
+import pe.msbaek.mock.TyrantOperations;
 import pe.msbaek.mock.TyrantResponseProperties;
 import pe.msbaek.mock.TyrantSocket;
 
@@ -23,15 +23,15 @@ public class TyrantSocketTest {
 
     @Test
     public void request_property_specification() {
-        assertSame(TyrantRequestProperties.PUT, TyrantRequestProperties.valueOf(0x10));
-        assertSame(TyrantRequestProperties.GET, TyrantRequestProperties.valueOf(0x30));
-        assertSame(TyrantRequestProperties.VANISH, TyrantRequestProperties.valueOf(0x72));
-        assertSame(TyrantRequestProperties.REMOVE, TyrantRequestProperties.valueOf(0x20));
-        assertSame(TyrantRequestProperties.SIZE, TyrantRequestProperties.valueOf(0x80));
-        assertSame(TyrantRequestProperties.RESET, TyrantRequestProperties.valueOf(0x50));
-        assertSame(TyrantRequestProperties.GET_NEXT_KEY, TyrantRequestProperties.valueOf(0x51));
+        assertSame(TyrantOperations.PUT, TyrantOperations.valueOf(0x10));
+        assertSame(TyrantOperations.GET, TyrantOperations.valueOf(0x30));
+        assertSame(TyrantOperations.VANISH, TyrantOperations.valueOf(0x72));
+        assertSame(TyrantOperations.REMOVE, TyrantOperations.valueOf(0x20));
+        assertSame(TyrantOperations.SIZE, TyrantOperations.valueOf(0x80));
+        assertSame(TyrantOperations.RESET, TyrantOperations.valueOf(0x50));
+        assertSame(TyrantOperations.GET_NEXT_KEY, TyrantOperations.valueOf(0x51));
         try{
-            TyrantRequestProperties.valueOf(-999999);
+            TyrantOperations.valueOf(-999999);
             fail();
         } catch(Exception e) {
             // pass
