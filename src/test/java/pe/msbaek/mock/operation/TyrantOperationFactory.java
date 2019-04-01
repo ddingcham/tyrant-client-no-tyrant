@@ -1,5 +1,7 @@
 package pe.msbaek.mock.operation;
 
+import pe.msbaek.mock.TyrantOperation;
+
 public class TyrantOperationFactory {
 
     public static TyrantOperation of(int operationCode) {

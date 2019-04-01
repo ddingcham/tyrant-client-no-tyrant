@@ -2,18 +2,13 @@ package pe.msbaek;
 
 import org.junit.Before;
 import org.junit.Test;
-import pe.msbaek.mock.operation.TyrantOperationFactory;
-import pe.msbaek.mock.operation.TyrantOperation;
-import pe.msbaek.mock.operation.TyrantOperationDecoder;
-import pe.msbaek.mock.operation.TyrantOperations;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Stream;
+import pe.msbaek.mock.TyrantOperation;
+import pe.msbaek.mock.TyrantOperationDecoder;
+import pe.msbaek.mock.operation.TyrantOperationBuilder;
+import pe.msbaek.mock.operation.*;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static pe.msbaek.mock.operation.TyrantOperationDecoderImpl.OPERATION_PREFIX;
 import static pe.msbaek.mock.operation.TyrantOperations.*;
 
 public class TyrantOperationDecoderTest {
@@ -21,8 +16,7 @@ public class TyrantOperationDecoderTest {
     private static final int[] BYTES_OF_KEY = new int[]{'k', 'e', 'y'};
     private static final int[] BYTES_OF_VALUE = new int[]{'v', 'a', 'l', 'u', 'e'};
 
-    //operation bytecode spec : TyrantMap
-    private static final int OPERATION_PREFIX = 0xC8;
+    //TyrantOperationBuilder bytecode spec : TyrantMap
     private static final int PUT_OPERATION = 0x10;
     private static final int GET_OPERATION = 0x30;
     private static final int VANISH_OPERATION = 0x72;
@@ -34,48 +28,7 @@ public class TyrantOperationDecoderTest {
 
     @Before
     public void setUp() {
-        decoder = new TyrantOperationDecoder(){
-            @Override
-            public TyrantOperation decode(int... operationCodes) {
-                if(operationCodes[0] != OPERATION_PREFIX) {
-                    throw new IllegalArgumentException("operationCodes should start with prefix(0xC8)");
-                }
-
-                TyrantOperation operation;
-
-                if(isSingularOperator(operationCodes[1])) {
-                    operation = TyrantOperationFactory.of(operationCodes[1]);
-                }
-                else if(isOperatorWithKey(operationCodes[1])) {
-                    operation = TyrantOperationFactory.of(operationCodes[1], operationCodes[2], Arrays.copyOfRange(operationCodes, 3, operationCodes.length));
-                }
-                else if(isOperatorWithPair(operationCodes[1])) {
-                    operation = TyrantOperationFactory.of(operationCodes[1], operationCodes[2], operationCodes[3], Arrays.copyOfRange(operationCodes, 4, operationCodes.length));
-                }
-                else {
-                    throw new IllegalArgumentException("operation in operationCodes is not supported");
-                }
-
-                return operation;
-            }
-
-            private boolean isSingularOperator(int operator) {
-                return Stream
-                        .of(VANISH, SIZE, RESET, GET_NEXT_KEY)
-                        .anyMatch(operation -> operation.matchedOperation(operator));
-            }
-
-            private boolean isOperatorWithKey(int operator) {
-                return Stream
-                        .of(GET, REMOVE)
-                        .anyMatch(operation -> operation.matchedOperation(operator));
-            }
-
-            private boolean isOperatorWithPair(int operator) {
-                return PUT.matchedOperation(operator);
-
-            }
-        };
+        decoder = new TyrantOperationDecoderImpl();
     }
 
     @Test
@@ -151,36 +104,6 @@ public class TyrantOperationDecoderTest {
 
     private TyrantOperationBuilder prefixedOperationBuilder() {
         return new TyrantOperationBuilder().with(OPERATION_PREFIX);
-    }
-
-    static class TyrantOperationBuilder {
-        List<Integer> codes = new ArrayList<>();
-        TyrantOperationBuilder with(int code) {
-            add(code);
-            return this;
-        }
-
-        TyrantOperationBuilder with(int[] codes) {
-            for(int code : codes) {
-                with(code);
-            }
-            return this;
-        }
-
-        private void add(int code) {
-            codes.add(code);
-        }
-
-        public TyrantOperation validOperation(TyrantOperationDecoder decoder) {
-            int[] operationCodes = codes.stream()
-                    .mapToInt(Integer::intValue)
-                    .toArray();
-            TyrantOperation operation = decoder.decode(operationCodes);
-            if(!operation.isValid()) {
-                fail();
-            }
-            return operation;
-        }
     }
 
 }

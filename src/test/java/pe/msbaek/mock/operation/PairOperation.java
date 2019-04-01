@@ -1,5 +1,7 @@
 package pe.msbaek.mock.operation;
 
+import pe.msbaek.mock.TyrantOperation;
+
 public class PairOperation implements TyrantOperation {
 
     private TyrantOperations operation;
