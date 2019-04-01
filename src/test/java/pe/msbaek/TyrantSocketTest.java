@@ -1,7 +1,7 @@
 package pe.msbaek;
 
 import org.junit.Test;
-import pe.msbaek.mock.TyrantOperations;
+import pe.msbaek.mock.operation.TyrantOperations;
 import pe.msbaek.mock.TyrantResponseProperties;
 import pe.msbaek.mock.TyrantSocket;
 

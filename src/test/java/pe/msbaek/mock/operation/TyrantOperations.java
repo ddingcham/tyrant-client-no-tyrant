@@ -1,4 +1,4 @@
-package pe.msbaek.mock;
+package pe.msbaek.mock.operation;
 
 import java.util.Arrays;
 import java.util.NoSuchElementException;
@@ -25,7 +25,7 @@ public enum TyrantOperations {
                 .orElseThrow(NoSuchElementException::new);
     }
 
-    private boolean matchedOperation(int operationCode) {
+    public boolean matchedOperation(int operationCode) {
         return this.operationCode == operationCode;
     }
 }
