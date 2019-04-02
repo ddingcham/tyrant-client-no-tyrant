@@ -1,26 +1,22 @@
 package pe.msbaek.mock.operation;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import pe.msbaek.mock.TyrantOperation;
 
+@AllArgsConstructor(access = AccessLevel.PACKAGE)
+@EqualsAndHashCode
+@ToString
 public class PairOperation implements TyrantOperation {
 
     private TyrantOperations operation;
     private String key;
     private String value;
 
-    PairOperation(int operationCode, String key, String value) {
-        operation = TyrantOperations.valueOf(operationCode);
-        this.key = key;
-        this.value = value;
-    }
-
     @Override
-    public TyrantOperations getOperation() {
-        return operation;
-    }
+    public void run() {
 
-    @Override
-    public boolean isValid() {
-        return true;
     }
 }

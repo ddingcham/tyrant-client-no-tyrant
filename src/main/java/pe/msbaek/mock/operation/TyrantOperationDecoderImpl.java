@@ -4,9 +4,6 @@ import pe.msbaek.mock.TyrantOperation;
 import pe.msbaek.mock.TyrantOperationDecoder;
 
 import java.util.Arrays;
-import java.util.stream.Stream;
-
-import static pe.msbaek.mock.operation.TyrantOperations.*;
 
 public class TyrantOperationDecoderImpl implements TyrantOperationDecoder {
 
@@ -18,35 +15,37 @@ public class TyrantOperationDecoderImpl implements TyrantOperationDecoder {
             throw new IllegalArgumentException("operationCodes should start with prefix(0xC8)");
         }
 
-        TyrantOperation operation;
+        TyrantOperations operator = TyrantOperations.valueOf(operationCodes[1]);
 
-        if (isSingularOperator(operationCodes[1])) {
-            operation = TyrantOperationFactory.of(operationCodes[1]);
-        } else if (isOperatorWithKey(operationCodes[1])) {
-            operation = TyrantOperationFactory.of(operationCodes[1], operationCodes[2], Arrays.copyOfRange(operationCodes, 3, operationCodes.length));
-        } else if (isOperatorWithPair(operationCodes[1])) {
-            operation = TyrantOperationFactory.of(operationCodes[1], operationCodes[2], operationCodes[3], Arrays.copyOfRange(operationCodes, 4, operationCodes.length));
-        } else {
-            throw new IllegalArgumentException("TyrantOperationBuilder in operationCodes is not supported");
+        if (operator == TyrantOperations.NOT_SUPPORTED) {
+            throw new IllegalArgumentException("operator in operationCodes is not supported");
         }
 
-        return operation;
+        int length = operationCodes.length;
+
+        if (operator.isSingularOperator()) {
+
+            return TyrantOperationFactory.of(operator);
+
+        } else if (operator.isOperatorWithKey() && operationCodes[2] == length - 3) {
+
+            int[] keySource = Arrays.copyOfRange(operationCodes, 3, length);
+            return TyrantOperationFactory.of(operator, convertToString(keySource));
+
+        } else if (operator.isOperatorWithPair() && operationCodes[2] + operationCodes[3] == length - 4) {
+
+            int[] keySource = Arrays.copyOfRange(operationCodes, 4, length - operationCodes[3]);
+            int[] valueSource = Arrays.copyOfRange(operationCodes, length - operationCodes[3], length);
+            return TyrantOperationFactory.of(operator, convertToString(keySource), convertToString(valueSource));
+
+        } else {
+            throw new IllegalArgumentException("invalid operationCodes format");
+        }
     }
 
-    private boolean isSingularOperator(int operator) {
-        return Stream
-                .of(VANISH, SIZE, RESET, GET_NEXT_KEY)
-                .anyMatch(operation -> operation.matchedOperation(operator));
-    }
-
-    private boolean isOperatorWithKey(int operator) {
-        return Stream
-                .of(GET, REMOVE)
-                .anyMatch(operation -> operation.matchedOperation(operator));
-    }
-
-    private boolean isOperatorWithPair(int operator) {
-        return PUT.matchedOperation(operator);
-
+    private String convertToString(int[] source) {
+        StringBuilder builder = new StringBuilder();
+        Arrays.stream(source).forEach(item -> builder.append((char)item));
+        return builder.toString();
     }
 }

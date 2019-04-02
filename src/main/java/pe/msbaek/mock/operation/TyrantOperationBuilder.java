@@ -6,8 +6,6 @@ import pe.msbaek.mock.TyrantOperationDecoder;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.fail;
-
 public class TyrantOperationBuilder {
     private List<Integer> codes = new ArrayList<>();
 
@@ -27,7 +25,7 @@ public class TyrantOperationBuilder {
         codes.add(code);
     }
 
-    public TyrantOperation validOperation(TyrantOperationDecoder decoder) {
+    public TyrantOperation build(TyrantOperationDecoder decoder) {
         int[] operationCodes = codes.stream()
                 .mapToInt(Integer::intValue)
                 .toArray();
