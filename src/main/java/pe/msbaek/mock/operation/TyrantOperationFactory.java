@@ -2,17 +2,29 @@ package pe.msbaek.mock.operation;
 
 import pe.msbaek.mock.TyrantOperation;
 
-public class TyrantOperationFactory {
+class TyrantOperationFactory {
 
-    public static TyrantOperation of(int operationCode) {
-        return new SingularOperation(operationCode);
+    private static final String NOT_SUPPORTED = "operator in operationCodes is not supported";
+
+    static TyrantOperation of(TyrantOperations operator) {
+        validateOperator(operator);
+        return new SingularOperation(operator);
     }
 
-    public static TyrantOperation of(int operationCode, int keyLength, int[] properties) {
-        return new KeyOperation(operationCode, String.valueOf(properties));
+    static TyrantOperation of(TyrantOperations operator, String key) {
+        validateOperator(operator);
+        return new KeyOperation(operator, key);
     }
 
-    public static TyrantOperation of(int operationCode, int keyLength, int valueLength, int[] properties) {
-        return new PairOperation(operationCode, String.valueOf(properties), String.valueOf(properties));
+    static TyrantOperation of(TyrantOperations operator, String key, String value) {
+        validateOperator(operator);
+        return new PairOperation(operator, key, value);
     }
+
+    private static void validateOperator(TyrantOperations operator) {
+        if (operator == TyrantOperations.NOT_SUPPORTED) {
+            throw new UnsupportedOperationException(NOT_SUPPORTED);
+        }
+    }
+
 }

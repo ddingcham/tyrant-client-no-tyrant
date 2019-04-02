@@ -5,9 +5,9 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import pe.msbaek.mock.TyrantOperationDecoder;
 
-import java.util.IllegalFormatException;
-
 import static pe.msbaek.mock.Contexts.*;
+
+import static pe.msbaek.mock.operation.TyrantOperationDecoderImpl.IllegalFormatException;
 
 
 public class TyrantOperationDecoderTest {

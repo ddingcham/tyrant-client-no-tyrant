@@ -35,8 +35,8 @@ public enum TyrantOperations {
     public static TyrantOperations valueOf(int operationCode) {
         return Arrays.stream(values())
                 .filter(operations -> operations.matchedOperation(operationCode))
-                .findFirst()
-                .orElseThrow(NoSuchElementException::new);
+                .findAny()
+                .orElse(NOT_SUPPORTED);
     }
 
     public boolean matchedOperation(int operationCode) {
