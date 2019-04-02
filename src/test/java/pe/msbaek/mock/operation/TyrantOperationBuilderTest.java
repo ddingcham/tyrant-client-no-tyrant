@@ -6,7 +6,6 @@ import pe.msbaek.mock.TyrantOperation;
 import pe.msbaek.mock.TyrantOperationDecoder;
 
 import static org.junit.Assert.assertEquals;
-import static pe.msbaek.mock.operation.TyrantOperationDecoderImpl.OPERATION_PREFIX;
 import static pe.msbaek.mock.operation.TyrantOperations.*;
 import static pe.msbaek.mock.Contexts.*;
 

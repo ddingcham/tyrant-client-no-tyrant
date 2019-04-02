@@ -17,4 +17,5 @@ public class Contexts {
     public static final int SIZE_OPERATION = 0x80;
     public static final int RESET_OPERATION = 0x50;
     public static final int GET_NEXT_KEY_OPERATION = 0x51;
+    public static final int OPERATION_PREFIX = 0xC8;
 }
