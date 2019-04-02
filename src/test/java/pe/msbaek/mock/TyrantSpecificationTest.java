@@ -18,12 +18,7 @@ public class TyrantSpecificationTest {
         assertSame(TyrantOperations.SIZE, TyrantOperations.valueOf(0x80));
         assertSame(TyrantOperations.RESET, TyrantOperations.valueOf(0x50));
         assertSame(TyrantOperations.GET_NEXT_KEY, TyrantOperations.valueOf(0x51));
-        try{
-            TyrantOperations.valueOf(-999999);
-            fail();
-        } catch(NoSuchElementException e) {
-            // pass
-        }
+        assertSame(TyrantOperations.NOT_SUPPORTED, TyrantOperations.valueOf(-999999));
     }
 
     @Test
