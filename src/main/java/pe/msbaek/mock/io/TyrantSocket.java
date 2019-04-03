@@ -10,6 +10,8 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
+import static pe.msbaek.mock.Contexts.OPERATION_PREFIX;
+
 public class TyrantSocket extends Socket {
     @Override
     public InputStream getInputStream() {
@@ -41,18 +43,24 @@ public class TyrantSocket extends Socket {
         List<Integer> buffer = new ArrayList<>();
 
         @Override
-        public void write(int b) {
-            TyrantSocketOutputFile.write(b);
+        public void write(int i) throws IOException {
+            if(i == OPERATION_PREFIX) {
+                flush();
+            }
+            buffer.add(i);
         }
 
         @Override
-        public void write(@NonNull byte[] b) throws IOException {
-
+        public void write(@NonNull byte[] bytes) throws IOException {
+            for(byte b: bytes) {
+                write(Byte.toUnsignedInt(b));
+            }
         }
 
         @Override
         public void flush() throws IOException {
-
+            // TODO : synchronized write operation to file
+            buffer.clear();
         }
 
         public int getCurrentBufferLength() {
