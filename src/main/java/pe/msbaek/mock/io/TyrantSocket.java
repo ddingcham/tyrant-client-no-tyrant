@@ -2,6 +2,8 @@ package pe.msbaek.mock.io;
 
 
 import lombok.NonNull;
+import pe.msbaek.mock.operation.TyrantOperationBuilder;
+import pe.msbaek.mock.operation.TyrantOperationDecoderImpl;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,7 +46,7 @@ public class TyrantSocket extends Socket {
 
         @Override
         public void write(int i) throws IOException {
-            if(i == OPERATION_PREFIX) {
+            if(i == OPERATION_PREFIX && !buffer.isEmpty()) {
                 flush();
             }
             buffer.add(i);
@@ -60,6 +62,9 @@ public class TyrantSocket extends Socket {
         @Override
         public void flush() throws IOException {
             // TODO : synchronized write operation to file
+            TyrantOperationBuilder builder = new TyrantOperationBuilder();
+            buffer.forEach(code -> builder.with(code));
+            TyrantSocketOutputFile.write(builder.build(new TyrantOperationDecoderImpl()));
             buffer.clear();
         }
 
