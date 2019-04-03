@@ -2,12 +2,12 @@ package pe.msbaek.mock.operation;
 
 import org.junit.Before;
 import org.junit.Test;
-import pe.msbaek.mock.TyrantOperation;
-import pe.msbaek.mock.TyrantOperationDecoder;
 
 import static org.junit.Assert.assertEquals;
 import static pe.msbaek.mock.operation.TyrantOperations.*;
+import static pe.msbaek.mock.TestContexts.*;
 import static pe.msbaek.mock.Contexts.*;
+
 
 public class TyrantOperationBuilderTest {
 

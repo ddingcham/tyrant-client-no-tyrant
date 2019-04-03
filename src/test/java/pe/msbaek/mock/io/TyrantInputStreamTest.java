@@ -1,4 +1,4 @@
-package pe.msbaek;
+package pe.msbaek.mock.io;
 
 public class TyrantInputStreamTest {
 }

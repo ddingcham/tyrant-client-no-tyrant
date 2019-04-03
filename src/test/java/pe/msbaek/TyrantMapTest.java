@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
-import pe.msbaek.mock.TyrantSocket;
+import pe.msbaek.mock.io.TyrantSocket;
 
 import java.io.*;
 import java.util.Iterator;

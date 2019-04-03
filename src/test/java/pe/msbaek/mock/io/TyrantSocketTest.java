@@ -1,12 +1,8 @@
-package pe.msbaek.mock;
+package pe.msbaek.mock.io;
 
 import org.junit.Test;
-import pe.msbaek.mock.operation.TyrantOperations;
-import pe.msbaek.mock.TyrantResponseProperties;
-import pe.msbaek.mock.TyrantSocket;
 
 import java.io.IOException;
-import java.util.NoSuchElementException;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;

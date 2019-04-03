@@ -1,8 +1,5 @@
 package pe.msbaek.mock.operation;
 
-import pe.msbaek.mock.TyrantOperation;
-import pe.msbaek.mock.TyrantOperationDecoder;
-
 import java.util.Arrays;
 
 public class TyrantOperationDecoderImpl implements TyrantOperationDecoder {

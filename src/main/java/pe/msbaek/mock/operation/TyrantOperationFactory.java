@@ -1,7 +1,5 @@
 package pe.msbaek.mock.operation;
 
-import pe.msbaek.mock.TyrantOperation;
-
 class TyrantOperationFactory {
 
     private static final String NOT_SUPPORTED = "operator in operationCodes is not supported";

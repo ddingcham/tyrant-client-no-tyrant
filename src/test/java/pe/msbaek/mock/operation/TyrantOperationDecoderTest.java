@@ -3,7 +3,6 @@ package pe.msbaek.mock.operation;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import pe.msbaek.mock.TyrantOperationDecoder;
 
 import static pe.msbaek.mock.Contexts.*;
 
