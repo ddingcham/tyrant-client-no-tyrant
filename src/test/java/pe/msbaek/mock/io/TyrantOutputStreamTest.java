@@ -21,33 +21,33 @@ public class TyrantOutputStreamTest {
 
     @Test
     public void write_int() throws IOException {
-        assertThat(0, is(output.getCurrentBufferLength()));
+        assertThat(output.getCurrentBufferLength(), is(0));
         output.write(OPERATION_PREFIX);
-        assertThat(1, is(output.getCurrentBufferLength()));
+        assertThat(output.getCurrentBufferLength(), is(1));
     }
 
     @Test
     public void write_int_when_prefix_then_flush() throws IOException {
-        assertThat(0, is(output.getCurrentBufferLength()));
+        assertThat(output.getCurrentBufferLength(), is(0));
         output.write(0);
         output.write(0);
-        assertThat(2, is(output.getCurrentBufferLength()));
+        assertThat(output.getCurrentBufferLength(), is(2));
         output.write(OPERATION_PREFIX);
-        assertThat(1, is(output.getCurrentBufferLength()));
+        assertThat(output.getCurrentBufferLength(), is(1));
     }
 
     @Test
     public void write_bytes() throws IOException {
-        assertThat(0, is(output.getCurrentBufferLength()));
+        assertThat(output.getCurrentBufferLength(), is(0));
         output.write(new byte[]{1, 2, 3});
-        assertThat(3, is(output.getCurrentBufferLength()));
+        assertThat(output.getCurrentBufferLength(), is(3));
     }
 
     @Test
     public void write_bytes_when_prefix_then_flush() throws IOException {
-        assertThat(0, is(output.getCurrentBufferLength()));
+        assertThat(output.getCurrentBufferLength(), is(0));
         output.write(new byte[]{1, 2, (byte) OPERATION_PREFIX, 4, 5});
-        assertThat(3, is(output.getCurrentBufferLength()));
+        assertThat(output.getCurrentBufferLength(), is(5));
     }
 
 
