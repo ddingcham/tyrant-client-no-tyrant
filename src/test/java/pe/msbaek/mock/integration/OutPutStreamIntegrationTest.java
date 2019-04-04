@@ -14,13 +14,14 @@ import static org.junit.Assert.*;
 import static pe.msbaek.mock.Contexts.*;
 import static pe.msbaek.mock.TestContexts.*;
 
-public class RequestIntegrationTest {
+public class OutPutStreamIntegrationTest {
 
     TyrantSocket socket;
     DataOutputStream writer;
 
     @Before
     public void setUp() {
+        TyrantSocketOutputFile.clear();
         socket = new TyrantSocket();
         writer = new DataOutputStream(socket.getOutputStream());
     }
@@ -28,11 +29,11 @@ public class RequestIntegrationTest {
     @Test
     public void put() throws IOException {
         assertThat(TyrantSocketOutputFile.size(), is(0));
-        writeOperation(PUT_OPERATION);
-        writer.writeInt(KEY.length());
-        writer.writeInt(VALUE.length());
+        writer.writeInt(KEY.getBytes().length);
+        writer.writeInt(VALUE.getBytes().length);
         writer.write(KEY.getBytes());
         writer.write(VALUE.getBytes());
+        writer.flush();
         assertThat(TyrantSocketOutputFile.size(), is(1));
     }
 
@@ -42,6 +43,7 @@ public class RequestIntegrationTest {
         writeOperation(GET_OPERATION);
         writer.writeInt(KEY.length());
         writer.write(KEY.getBytes());
+        writer.flush();
         assertThat(TyrantSocketOutputFile.size(), is(1));
     }
 
@@ -49,6 +51,9 @@ public class RequestIntegrationTest {
     public void remove() throws IOException {
         assertThat(TyrantSocketOutputFile.size(), is(0));
         writeOperation(REMOVE_OPERATION);
+        writer.writeInt(KEY.length());
+        writer.write(KEY.getBytes());
+        writer.flush();
         assertThat(TyrantSocketOutputFile.size(), is(1));
     }
 
@@ -56,6 +61,7 @@ public class RequestIntegrationTest {
     public void vanish() throws IOException {
         assertThat(TyrantSocketOutputFile.size(), is(0));
         writeOperation(VANISH_OPERATION);
+        writer.flush();
         assertThat(TyrantSocketOutputFile.size(), is(1));
     }
 
@@ -63,6 +69,7 @@ public class RequestIntegrationTest {
     public void size() throws IOException {
         assertThat(TyrantSocketOutputFile.size(), is(0));
         writeOperation(SIZE_OPERATION);
+        writer.flush();
         assertThat(TyrantSocketOutputFile.size(), is(1));
     }
 
@@ -70,6 +77,7 @@ public class RequestIntegrationTest {
     public void reset() throws IOException {
         assertThat(TyrantSocketOutputFile.size(), is(0));
         writeOperation(RESET_OPERATION);
+        writer.flush();
         assertThat(TyrantSocketOutputFile.size(), is(1));
     }
 
@@ -77,14 +85,13 @@ public class RequestIntegrationTest {
     public void get_next_key() throws IOException {
         assertThat(TyrantSocketOutputFile.size(), is(0));
         writeOperation(GET_NEXT_KEY_OPERATION);
+        writer.flush();
         assertThat(TyrantSocketOutputFile.size(), is(1));
     }
 
     @After
     public void tearDown() throws IOException {
         socket.close();
-        writer.close();
-        TyrantSocketOutputFile.clear();
     }
 
     private void writeOperation(int operationCode) throws IOException {

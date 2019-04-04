@@ -1,20 +1,22 @@
 package pe.msbaek.mock.io;
 
-import pe.msbaek.mock.operation.TyrantOperation;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TyrantSocketOutputFile {
 
-    private static List<TyrantOperation> tyrantOperations = new LinkedList<>();
+    private static List<int[]> tyrantOperations = new ArrayList<>();
 
     public static void clear() {
         tyrantOperations.clear();
     }
 
-    public static void write(TyrantOperation operation) {
-        tyrantOperations.add(operation);
+    public static void write(int[] chunk) {
+        tyrantOperations.add(chunk);
     }
 
     public static int size() {

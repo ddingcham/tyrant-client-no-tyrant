@@ -11,6 +11,9 @@ import static pe.msbaek.mock.Contexts.*;
 
 public class TyrantOperationBuilderTest {
 
+    private static final int[] KEY_LENGTH = new int[]{0, 0, 0, BYTES_OF_KEY.length};
+    private static final int[] VALUE_LENGTH = new int[]{0, 0, 0, BYTES_OF_VALUE.length};
+
     private TyrantOperationDecoder decoder;
 
     @Before
@@ -22,8 +25,8 @@ public class TyrantOperationBuilderTest {
     public void put_with_valid_input() {
         TyrantOperation operation = prefixedOperationBuilder()
                 .with(PUT_OPERATION)
-                .with(BYTES_OF_KEY.length)
-                .with(BYTES_OF_VALUE.length)
+                .with(KEY_LENGTH)
+                .with(VALUE_LENGTH)
                 .with(BYTES_OF_KEY)
                 .with(BYTES_OF_VALUE)
                 .build(decoder);
@@ -35,7 +38,7 @@ public class TyrantOperationBuilderTest {
     public void get_with_valid_input() {
         TyrantOperation operation = prefixedOperationBuilder()
                 .with(GET_OPERATION)
-                .with(BYTES_OF_KEY.length)
+                .with(KEY_LENGTH)
                 .with(BYTES_OF_KEY)
                 .build(decoder);
 
@@ -46,7 +49,7 @@ public class TyrantOperationBuilderTest {
     public void remove_with_valid_input() {
         TyrantOperation operation = prefixedOperationBuilder()
                 .with(REMOVE_OPERATION)
-                .with(BYTES_OF_KEY.length)
+                .with(KEY_LENGTH)
                 .with(BYTES_OF_KEY)
                 .build(decoder);
 

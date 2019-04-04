@@ -1,5 +1,9 @@
 package pe.msbaek.mock.operation;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 class TyrantOperationFactory {
 
     private static final String NOT_SUPPORTED = "operator in operationCodes is not supported";

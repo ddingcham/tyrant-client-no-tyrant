@@ -26,7 +26,6 @@ public class TyrantOperationBuilder {
         int[] operationCodes = codes.stream()
                 .mapToInt(Integer::intValue)
                 .toArray();
-        TyrantOperation operation = decoder.decode(operationCodes);
-        return operation;
+        return decoder.decode(operationCodes);
     }
 }

@@ -47,7 +47,7 @@ public class TyrantOutputStreamTest {
     public void write_bytes_when_prefix_then_flush() throws IOException {
         assertThat(output.getCurrentBufferLength(), is(0));
         output.write(new byte[]{1, 2, (byte) OPERATION_PREFIX, 4, 5});
-        assertThat(output.getCurrentBufferLength(), is(5));
+        assertThat(output.getCurrentBufferLength(), is(3));
     }
 
 

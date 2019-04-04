@@ -35,7 +35,6 @@ public enum TyrantOperations {
     public static TyrantOperations valueOf(int operationCode) {
         return Arrays.stream(values())
                 .filter(operations -> operations.matchedOperation(operationCode))
-                // TODO : valid code ???
                 .findAny()
                 .orElse(NOT_SUPPORTED);
     }

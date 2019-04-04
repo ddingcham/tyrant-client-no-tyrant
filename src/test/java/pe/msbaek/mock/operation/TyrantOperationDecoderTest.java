@@ -48,14 +48,14 @@ public class TyrantOperationDecoderTest {
     public void invalid_format_key_operation_key_length_not_positive() {
         expectedException.expect(IllegalFormatException.class);
         expectedException.expectMessage(INVALID_OPERATION_CODE_FORMAT_INVALID_LENGTH);
-        decoder.decode(OPERATION_PREFIX, GET_OPERATION, 0);
+        decoder.decode(OPERATION_PREFIX, GET_OPERATION, 0, 0, 0, 0);
     }
 
     @Test
     public void invalid_format_key_operation_not_matched_length() {
         expectedException.expect(IllegalFormatException.class);
         expectedException.expectMessage(INVALID_OPERATION_CODE_FORMAT_NOT_MATCHED_LENGTH);
-        decoder.decode(OPERATION_PREFIX, GET_OPERATION, 2, 'k');
+        decoder.decode(OPERATION_PREFIX, GET_OPERATION, 0, 0, 0, 2, 'k');
     }
 
     @Test
@@ -69,27 +69,27 @@ public class TyrantOperationDecoderTest {
     public void invalid_format_pair_operation_key_length_not_positive() {
         expectedException.expect(IllegalFormatException.class);
         expectedException.expectMessage(INVALID_OPERATION_CODE_FORMAT_INVALID_LENGTH);
-        decoder.decode(OPERATION_PREFIX, PUT_OPERATION, 0, 1, 'v');
+        decoder.decode(OPERATION_PREFIX, PUT_OPERATION, 0, 0, 0, 0, 0, 0, 0, 1, 'v');
     }
 
     @Test
     public void invalid_format_pair_operation_value_length_not_positive() {
         expectedException.expect(IllegalFormatException.class);
         expectedException.expectMessage(INVALID_OPERATION_CODE_FORMAT_INVALID_LENGTH);
-        decoder.decode(OPERATION_PREFIX, PUT_OPERATION, 1, 0, 'k');
+        decoder.decode(OPERATION_PREFIX, PUT_OPERATION, 0, 0, 0, 1, 0, 0, 0, 0, 'k');
     }
 
     @Test
     public void invalid_format_pair_operation_not_matched_key_length() {
         expectedException.expect(IllegalFormatException.class);
         expectedException.expectMessage(INVALID_OPERATION_CODE_FORMAT_NOT_MATCHED_LENGTH);
-        decoder.decode(OPERATION_PREFIX, GET_OPERATION, 2, 1, 'k', 'v');
+        decoder.decode(OPERATION_PREFIX, GET_OPERATION, 0, 0, 0, 2, 0, 0, 0, 1, 'k', 'v');
     }
 
     @Test
     public void invalid_format_pair_operation_not_matched_value_length() {
         expectedException.expect(IllegalFormatException.class);
         expectedException.expectMessage(INVALID_OPERATION_CODE_FORMAT_NOT_MATCHED_LENGTH);
-        decoder.decode(OPERATION_PREFIX, GET_OPERATION, 1, 2, 'k', 'v');
+        decoder.decode(OPERATION_PREFIX, GET_OPERATION, 0, 0, 0, 1, 0, 0, 0, 2, 'k', 'v');
     }
 }

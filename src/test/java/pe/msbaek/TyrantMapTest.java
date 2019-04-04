@@ -2,9 +2,7 @@ package pe.msbaek;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.TestName;
 import pe.msbaek.mock.io.TyrantSocket;
 
 import java.io.*;
@@ -20,9 +18,6 @@ public class TyrantMapTest {
 
 	private final byte[] key = new byte[]{'k', 'e', 'y'};
 	private final byte[] value = new byte[]{'v', 'a', 'l', 'u', 'e'};
-
-	@Rule
-	public TestName testName = new TestName();
 
 	private TyrantMap tyrantMap;
 

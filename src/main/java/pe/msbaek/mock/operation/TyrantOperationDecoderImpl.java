@@ -1,6 +1,8 @@
 package pe.msbaek.mock.operation;
 
 import java.util.Arrays;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class TyrantOperationDecoderImpl implements TyrantOperationDecoder {
 
@@ -18,26 +20,40 @@ public class TyrantOperationDecoderImpl implements TyrantOperationDecoder {
 
         TyrantOperations operator = TyrantOperations.valueOf(operationCodes[1]);
 
-        int length = operationCodes.length;
-
         if (operator.isOperatorWithKey()) {
-            validateKeyOperationCodes(operationCodes);
+            int keyLength = mergeBytesToInt(operationCodes, 2, 6);
 
-            int[] keySource = Arrays.copyOfRange(operationCodes, 3, length);
+            operationCodes = mergeArrays(
+                    Arrays.copyOfRange(operationCodes, 0, 2),
+                    new int[]{keyLength},
+                    Arrays.copyOfRange(operationCodes, 6, operationCodes.length));
+            validateOperationCodesWithKey(operationCodes);
+
+            int[] keySource = Arrays.copyOfRange(operationCodes, 3, operationCodes.length);
             return TyrantOperationFactory.of(operator, convertToString(keySource));
 
         } else if (operator.isOperatorWithPair()) {
+            int keyLength = mergeBytesToInt(operationCodes, 2, 6);
+            int valueLength = mergeBytesToInt(operationCodes, 6, 10);
+
+            operationCodes = mergeArrays(Arrays.copyOfRange(operationCodes, 0, 2),
+                    new int[]{keyLength, valueLength},
+                    Arrays.copyOfRange(operationCodes, 10, operationCodes.length));
             validateOperationWithPair(operationCodes);
 
-            int[] keySource = Arrays.copyOfRange(operationCodes, 4, length - operationCodes[3]);
-            int[] valueSource = Arrays.copyOfRange(operationCodes, length - operationCodes[3], length);
+            int[] keySource = Arrays.copyOfRange(operationCodes, 4, operationCodes.length - operationCodes[3]);
+            int[] valueSource = Arrays.copyOfRange(operationCodes, operationCodes.length - operationCodes[3], operationCodes.length);
             return TyrantOperationFactory.of(operator, convertToString(keySource), convertToString(valueSource));
 
         }
         return TyrantOperationFactory.of(operator);
     }
 
-    private static void validateKeyOperationCodes(int[] operationCodes) {
+    private static int[] mergeArrays(int[]... arrays) {
+        return Stream.of(arrays).flatMapToInt(IntStream::of).toArray();
+    }
+
+    private static void validateOperationCodesWithKey(int[] operationCodes) {
         if (operationCodes.length < 3) {
             throw new IllegalFormatException(INVALID_OPERATION_CODE_FORMAT);
         } else if (operationCodes[2] <= 0) {
@@ -61,6 +77,19 @@ public class TyrantOperationDecoderImpl implements TyrantOperationDecoder {
         StringBuilder builder = new StringBuilder();
         Arrays.stream(source).forEach(item -> builder.append((char) item));
         return builder.toString();
+    }
+
+    private static int mergeBytesToInt(int[] operationCodes, int fromIndex, int toIndex) {
+        int result = 0;
+        if(operationCodes.length < toIndex) {
+            throw new IllegalFormatException(INVALID_OPERATION_CODE_FORMAT);
+        }
+        for (int i = fromIndex; i < toIndex - 1; i++) {
+            result += operationCodes[i];
+            result = result << 8;
+        }
+        result += operationCodes[toIndex - 1];
+        return result;
     }
 
     static class IllegalFormatException extends IllegalArgumentException {
