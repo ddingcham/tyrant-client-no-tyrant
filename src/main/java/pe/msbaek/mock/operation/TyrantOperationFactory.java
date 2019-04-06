@@ -2,6 +2,7 @@ package pe.msbaek.mock.operation;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import pe.msbaek.mock.contexts.TyrantOperations;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 class TyrantOperationFactory {

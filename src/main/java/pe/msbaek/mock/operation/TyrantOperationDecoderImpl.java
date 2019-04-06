@@ -1,5 +1,7 @@
 package pe.msbaek.mock.operation;
 
+import pe.msbaek.mock.contexts.TyrantOperations;
+
 import java.util.Arrays;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;

@@ -4,17 +4,14 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import pe.msbaek.mock.contexts.TyrantOperations;
 
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @EqualsAndHashCode
 @ToString
-public class KeyOperation implements TyrantOperation {
+public class KeyOperation extends TyrantOperation {
 
     private TyrantOperations operation;
     private String key;
 
-    @Override
-    public void run() {
-
-    }
 }

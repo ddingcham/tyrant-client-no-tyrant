@@ -10,7 +10,7 @@ import java.net.Socket;
 import java.util.LinkedList;
 import java.util.List;
 
-import static pe.msbaek.mock.Contexts.OPERATION_PREFIX;
+import static pe.msbaek.mock.contexts.Contexts.OPERATION_PREFIX;
 
 public class TyrantSocket extends Socket {
 
@@ -56,7 +56,7 @@ public class TyrantSocket extends Socket {
             if (buffer.isEmpty()) {
                 return;
             }
-            TyrantSocketOutputFile.write(buffer
+            TyrantInput.write(buffer
                     .stream()
                     .mapToInt(Integer::byteValue)
                     .toArray());

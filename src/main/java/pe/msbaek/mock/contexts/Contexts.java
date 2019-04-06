@@ -1,4 +1,4 @@
-package pe.msbaek.mock;
+package pe.msbaek.mock.contexts;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

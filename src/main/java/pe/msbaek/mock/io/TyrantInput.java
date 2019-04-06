@@ -6,8 +6,11 @@ import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+    Tyrant Clients [N] : TyrantInput [1] : MockTyrant [1]
+ */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class TyrantSocketOutputFile {
+public class TyrantInput {
 
     private static List<int[]> tyrantOperations = new ArrayList<>();
 
